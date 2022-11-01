@@ -1,11 +1,24 @@
+package org.example.kanban.task;
 
 public class Task {
-    String name;
-    TaskStatus status;
-    int taskId;
-    String description;
+    private String name;
+    private TaskStatus status;
+    private Integer id;
+    private String description;
+
+    public Task(String name, TaskStatus status, Integer id, String description) {
+        this.name = name;
+        this.status = status;
+        this.id = id;
+        this.description = description;
+    }
+
+    public Task() {
+
+    }
 
     public String getName() {
+
         return name;
     }
 
@@ -14,26 +27,32 @@ public class Task {
     }
 
     public TaskStatus getStatus() {
+
         return status;
     }
 
     public void setStatus(TaskStatus status) {
+
         this.status = status;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public int getId() {
+
+        return id;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public void setId(int id) {
+
+        this.id = id;
     }
 
     public String getDescription() {
+
         return description;
     }
 
     public void setDescription(String description) {
+
         this.description = description;
     }
 
@@ -42,7 +61,7 @@ public class Task {
         return "Task{" +
                 "name='" + name + '\'' +
                 ", status=" + status +
-                ", taskId=" + taskId +
+                ", id=" + id +
                 ", description='" + description + '\'' +
                 '}';
     }
