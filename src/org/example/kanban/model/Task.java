@@ -1,4 +1,4 @@
-package org.example.kanban.task;
+package org.example.kanban.model;
 
 public class Task {
     private String name;
@@ -14,11 +14,9 @@ public class Task {
     }
 
     public Task() {
-
     }
 
     public String getName() {
-
         return name;
     }
 
@@ -27,32 +25,26 @@ public class Task {
     }
 
     public TaskStatus getStatus() {
-
         return status;
     }
 
     public void setStatus(TaskStatus status) {
-
         this.status = status;
     }
 
     public int getId() {
-
         return id;
     }
 
     public void setId(int id) {
-
         this.id = id;
     }
 
     public String getDescription() {
-
         return description;
     }
 
     public void setDescription(String description) {
-
         this.description = description;
     }
 

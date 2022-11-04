@@ -1,4 +1,4 @@
-package org.example.kanban.task;
+package org.example.kanban.model;
 
 public class Subtask extends Task {
     private int epicId;
@@ -9,16 +9,13 @@ public class Subtask extends Task {
     }
 
     public Subtask() {
-
     }
 
     public int getEpicId() {
-
         return epicId;
     }
 
     public void setEpicId(int epicId) {
-
         this.epicId = epicId;
     }
 }
