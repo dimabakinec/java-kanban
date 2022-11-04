@@ -49,6 +49,11 @@ public class TaskManager {
                 subtask.setStatus(TaskStatus.NEW); // При создании статус всегда new
                 subtask.setId(idGenerator);
                 subtasks.put(idGenerator, subtask); // Добавили подзадачу в мапу
+                Epic epic = epics.get(subtasks.get(idGenerator).getEpicId());
+                epic.addSubtaskId(idGenerator);
+                //добавить id подзадачи в эпик и после уже вызвать метод
+                // по обновлению статуса эпика updateStatusEpic
+                updateStatusEpic(epic);
                 epicStatus(subtask);
             }
         }
