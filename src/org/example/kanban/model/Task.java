@@ -25,32 +25,26 @@ public class Task {
         }
 
     public TaskStatus getStatus() {
-
         return status;
         }
 
     public void setStatus(TaskStatus status) {
-
         this.status = status;
         }
 
     public int getId() {
-
         return id;
         }
 
     public void setId(int id) {
-
         this.id = id;
         }
 
     public String getDescription() {
-
         return description;
         }
 
     public void setDescription(String description) {
-
         this.description = description;
         }
 
@@ -60,7 +54,7 @@ public class Task {
                 "name='" + name + '\'' +
                 ", status=" + status +
                 ", id=" + id +
-                ", description='" + description +
-                '\'' + '}';
-        }
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

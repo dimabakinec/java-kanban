@@ -11,8 +11,6 @@ public class TaskManager {
     private HashMap<Integer, Epic> epics = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private int idGenerator = 0;
-
-
     /**
      * метод создает новую задачу
      *
@@ -54,33 +52,22 @@ public class TaskManager {
                 //добавить id подзадачи в эпик и после уже вызвать метод
                 // по обновлению статуса эпика updateStatusEpic
                 updateStatusEpic(epic);
-                epicStatus(subtask);
             }
-        }
-    }
-
-    public void epicStatus(Subtask subtask) {
-        Epic epic = epics.get(subtask.getEpicId());
-        epic.addSubtaskId(idGenerator);
-        if (epic.getStatus() == TaskStatus.DONE) { // Если стаус эпика завершен, меняем на в работе
-            epic.setStatus(TaskStatus.IN_PROGRESS);
-        } else {
-            System.out.println("Эпик не создан или не найден!");
         }
     }
 
     // Получение списка всех задач.
     public ArrayList<Task> getAllTasks() { // Получение списка всех задач.
         return new ArrayList<>(tasks.values());// Возвращаем список
-    }
+        }
 
     public ArrayList<Epic> getAllEpics() { // Получение списка всех задач.
         return new ArrayList<>(epics.values());// Возвращаем список
-    }
+        }
 
     public ArrayList<Subtask> getAllSubtasks() { // Получение списка всех задач.
         return new ArrayList<>(subtasks.values()); // Возвращаем список
-    }
+        }
 
     //Удаление по идентификатору.
     public void removeTaskById(int id) {
@@ -103,7 +90,6 @@ public class TaskManager {
             System.out.println("Идентификатор эпика указан не верно!");
         }
     }
-
     public void removeSubtaskByID(Integer id) { // Удаление по идентификатору подзадачи.
         if (subtasks.containsKey(id)) {
             Epic epic = epics.get(subtasks.get(id).getEpicId());
@@ -116,17 +102,14 @@ public class TaskManager {
     // Удаление всех задач.
     public void removeAllTasks() {
         tasks.clear();
-    }
-
+        }
     public void removeAllEpics() {
         epics.clear();
         subtasks.clear();
-    }
-
+        }
     public void removeAllSubtasks() {
         subtasks.clear();
-    }
-
+        }
     //Получение по идентификатору.
     public Task getTaskById(int id) {
         if (tasks.containsKey(id)) {
@@ -197,7 +180,7 @@ public class TaskManager {
             System.out.println("Ошибка ввода");
         }
     }
-
+    
     //метод на изменения статуса при изменении org.example.kanban.task.Subtask'a
     public void updateStatusEpic(Epic epic) {
         boolean isDone = true;
@@ -228,5 +211,4 @@ public class TaskManager {
             epic.setStatus(TaskStatus.IN_PROGRESS);
         }
     }
-
 }
