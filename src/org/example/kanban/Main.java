@@ -1,11 +1,14 @@
 package org.example.kanban;
 
-import org.example.kanban.manager.TaskManager;
+import org.example.kanban.manager.*;
 import org.example.kanban.model.*;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+
+        TaskManager taskManager = Managers.getDefault();
+        HistoryManager historyManager = Managers.getDefaultHistory();
+
         // создание эпик задачи + 2 подзадачи
         Task newTask1 = new Task();
         newTask1.setName("Задача №1");
@@ -72,6 +75,13 @@ public class Main {
         //удалить задачу и эпик задачу
         taskManager.removeAllTasks();
         taskManager.removeAllEpics();
-        //вывести на печать задачи со статусами
+
+        System.out.println("Список истории просмотров обновился");
+        System.out.println("История просмотров с повторами и ограничением в 10 задач");
+        System.out.println(taskManager.getHistory());
+        System.out.println("История просмотров без повторов и ограничений по задачам");
+        System.out.println(historyManager.getHistory());
+        System.out.println(taskManager.getHistory());
+
     }
 }
