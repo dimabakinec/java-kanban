@@ -9,7 +9,6 @@ public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Epic> epics = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private int idGenerator = 0;
-
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
@@ -18,16 +17,16 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     /**
-     * метод создает новую задачу
+     * создание новой задачи
      *
-     * @param task
+     * @param task - задача
      */
 
     @Override
     public void createTask(Task task) { //Функция создания задачи. Сам объект должен передаваться в качестве параметра.
         if (task != null) {
             idGenerator++;
-            task.setStatus((TaskStatus.NEW)); // при создании статус всегда new
+            task.setStatus(TaskStatus.NEW); // при создании статус всегда new
             task.setId(idGenerator);
             tasks.put(idGenerator, task); // добавили задачу в мапу
         }
@@ -40,7 +39,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void createEpic(Epic epic) { //Функция создания задачи. Сам объект должен передаваться в качестве параметра.
         if (epic != null) {
             idGenerator++;
-            epic.setStatus((TaskStatus.NEW)); // при создании статус всегда new
+            epic.setStatus(TaskStatus.NEW); // при создании статус всегда new
             epic.setId(idGenerator);
             epics.put(idGenerator, epic); // добавили задачу в мапу
         }
@@ -137,8 +136,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int id) {
         if (tasks.containsKey(id)) {
-            historyManager.add(subtasks.get(id));
-            return tasks.get(id);
+            Task task = tasks.get(id);
+            historyManager.add(task);
+            return task;
         } else {
             System.out.println("Идентификатор задачи указан не верно!");
             return null;
@@ -148,8 +148,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Epic getEpicById(int id) {
         if (epics.containsKey(id)) {
-            historyManager.add(epics.get(id));
-            return epics.get(id);
+            Epic epic = epics.get(id);
+            historyManager.add(epic);
+            return epic;
+
         } else {
             System.out.println("Идентификатор эпика указан не верно!");
             return null;
@@ -159,8 +161,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtaskById(int id) {
         if (subtasks.containsKey(id)) {
-            historyManager.add(subtasks.get(id));
-            return subtasks.get(id);
+            Subtask subtask = subtasks.get(id);
+            historyManager.add(subtask);
+            return subtask;
         } else {
             System.out.println("Идентификатор подзадачи указан не верно!");
             return null;
@@ -172,11 +175,11 @@ public class InMemoryTaskManager implements TaskManager {
     public ArrayList<Subtask> getSubtasksFromEpic(int id) {
         if (epics.containsKey(id)) {
             Epic epic = epics.get(id);
-            ArrayList<Subtask> listOfAllSubtasks = new ArrayList<>();
+            ArrayList<Subtask> subtasksFromEpic = new ArrayList<>();
             for (int idSubtask : epic.getSubtaskIds()) {
-                listOfAllSubtasks.add(subtasks.get(idSubtask));
+                subtasksFromEpic.add(subtasks.get(idSubtask));
             }
-            return listOfAllSubtasks;
+            return subtasksFromEpic;
         } else {
             System.out.println("Идентификатор эпика указан не верно!");
             return null;

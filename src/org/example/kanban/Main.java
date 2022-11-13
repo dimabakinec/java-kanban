@@ -34,6 +34,7 @@ public class Main {
         newSubtask2.setName("Подзадача №2 эпика №1");
         newSubtask2.setDescription("Описание подзадачи №2 эпика №1");
         taskManager.createSubtask(newSubtask2);
+
         // создание эпик задачи + 1 подзадача
         Epic newEpic2 = new Epic();
         newEpic2.setName("Эпик №2");
@@ -47,6 +48,7 @@ public class Main {
         System.out.println(taskManager.getAllTasks());
         System.out.println(taskManager.getAllEpics());
         System.out.println(taskManager.getAllSubtasks());
+
         //меняем статусы созданных объектов
         newTask1.setId(1);
         newTask1.setStatus(TaskStatus.IN_PROGRESS);
@@ -69,9 +71,11 @@ public class Main {
         System.out.println(taskManager.getAllTasks());
         System.out.println(taskManager.getAllEpics());
         System.out.println(taskManager.getAllSubtasks());
+
         //удаляем эпик и задачу по Id
-        taskManager.removeEpicById(3);
-        taskManager.removeTaskById(1);
+       taskManager.removeEpicById(3);
+       taskManager.removeTaskById(1);
+
         //удалить задачу и эпик задачу
         taskManager.removeAllTasks();
         taskManager.removeAllEpics();
