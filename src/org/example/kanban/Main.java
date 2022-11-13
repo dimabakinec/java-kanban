@@ -73,12 +73,17 @@ public class Main {
         System.out.println(taskManager.getAllSubtasks());
 
         //удаляем эпик и задачу по Id
-       taskManager.removeEpicById(3);
-       taskManager.removeTaskById(1);
+       //taskManager.removeEpicById(3);
+       //taskManager.removeTaskById(1);
 
         //удалить задачу и эпик задачу
-        taskManager.removeAllTasks();
-        taskManager.removeAllEpics();
+        //taskManager.removeAllTasks();
+        //taskManager.removeAllEpics();
+
+        taskManager.getEpicById(1);
+        taskManager.getTaskById(1);
+        taskManager.getSubtaskById(1);
+
 
         System.out.println("Список истории просмотров обновился");
         System.out.println("История просмотров с повторами и ограничением в 10 задач");

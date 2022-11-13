@@ -137,8 +137,8 @@ public class InMemoryTaskManager implements TaskManager {
     public Task getTaskById(int id) {
         if (tasks.containsKey(id)) {
             Task task = tasks.get(id);
-            historyManager.add(task);
-            return task;
+            historyManager.add(tasks.get(id));
+            return tasks.get(id);
         } else {
             System.out.println("Идентификатор задачи указан не верно!");
             return null;

@@ -4,14 +4,14 @@ import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private final LinkedList<Task> taskHistory = new LinkedList<>();
-    final int MAX_HISTORY_SIZE = 10;
+    private static final int MAX_HISTORY_SIZE = 10;
     
     @Override
     public void add(Task task) {
-        taskHistory.add(task);
         if(taskHistory.size() > MAX_HISTORY_SIZE) {
             taskHistory.removeFirst();
         }
+        taskHistory.add(task);
     }
 
     @Override
