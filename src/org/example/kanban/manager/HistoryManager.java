@@ -1,11 +1,16 @@
 package org.example.kanban.manager;
+
 import org.example.kanban.model.Task;
-import java.util.*;
+import java.util.List;
 
 public interface HistoryManager {
 
-    void add(Task task);
+    void add(Task task); // добавление таска
 
-    List<Task> getHistory();
+    void remove (int id); //удаление по id
+
+    // void clear (); // очистка истории
+
+    List<Task> getHistory(); // получение истории
 
 }

@@ -3,7 +3,6 @@ package org.example.kanban.manager;
 import org.example.kanban.model.Epic;
 import org.example.kanban.model.Subtask;
 import org.example.kanban.model.Task;
-
 import java.util.*;
 
 public interface TaskManager {

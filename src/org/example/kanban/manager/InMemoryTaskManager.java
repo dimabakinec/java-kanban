@@ -1,7 +1,6 @@
 package org.example.kanban.manager;
 
 import org.example.kanban.model.*;
-
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
