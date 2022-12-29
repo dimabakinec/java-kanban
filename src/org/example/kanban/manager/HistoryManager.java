@@ -9,8 +9,6 @@ public interface HistoryManager {
 
     void remove (int id); //удаление по id
 
-    // void clear (); // очистка истории
-
     List<Task> getHistory(); // получение истории
 
 }

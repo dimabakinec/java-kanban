@@ -1,12 +1,12 @@
 package org.example.kanban.manager;
 import org.example.kanban.model.Task;
-
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private Node<Task> head; // Указатель на первый элемент списка.
     private Node<Task> tail; // Указатель на последний элемент списка.
     private final Map<Integer, Node<Task>> viewedTasks = new HashMap<>();
+    protected static HistoryManager historyManager;
 
     @Override
     public void add(Task task) {
@@ -22,15 +22,13 @@ public class InMemoryHistoryManager implements HistoryManager {
         viewedTasks.remove(id);
     }
 
-    @Override
-    public List<Task> getHistory() { // список просмотренных задач
+    public List<Task> getHistory() {
         return getTasks();
     }
 
-
-    List<Task> getTasks() {
+    private List<Task> getTasks() {
         List<Task> tasksList = new ArrayList<>();
-        Node <Task> element = head;
+        Node<Task> element = head;
         while (element != null) {
             tasksList.add(element.data);
             element = element.next;
@@ -38,8 +36,8 @@ public class InMemoryHistoryManager implements HistoryManager {
         return tasksList;
     }
 
-    public Node<Task> linkLast(Task task) {
-        Node<Task> newNode = new Node<>(tail, task, null);
+    private Node<Task> linkLast(Task task) {
+        final Node<Task> newNode = new Node<>(tail, task, null);
         if (tail == null)
             head = newNode;
         else
@@ -48,29 +46,33 @@ public class InMemoryHistoryManager implements HistoryManager {
         return newNode;
     }
 
-    public void removeNode(Node<Task> node) {
-        if (node == null)
-            return;
-        if (node.equals(head)) {
-            head = node.next;
-            if (node.next != null)
-                node.next.prev = null;
+    private void removeNode(Node<Task> node) {
+        final Node<Task> nextNode = node.next;
+        final Node<Task> prevNode = node.prev;
+        if (prevNode == null) {
+            head = nextNode;
         } else {
-            node.prev.next = node.next;
-            if (node.next != null)
-                node.next.prev = node.prev;
+            prevNode.next = nextNode;
+            node.prev = null;
         }
+        if (nextNode == null) {
+            tail = prevNode;
+        } else {
+            nextNode.prev = prevNode;
+            node.next = null;
+        }
+        node.data = null;
     }
 
-    static class Node<Task> {
-        public Task data; // Данные внутри элемента.
-        public Node<Task> next;
-        public Node<Task> prev; // Ссылка на предыдущий узел.
+    private static class Node<Task> {
+        Task data; // Данные внутри элемента.
+        Node<Task> next;
+        Node<Task> prev; // Ссылка на предыдущий узел.
 
-        public Node(Node<Task> prev, Task data, Node<Task> next) {
+        Node(Node<Task> prev, Task data, Node<Task> next) {
+            this.prev = prev;
             this.data = data;
             this.next = next;
-            this.prev = prev;
         }
     }
 }

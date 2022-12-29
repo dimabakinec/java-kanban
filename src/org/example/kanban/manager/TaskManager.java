@@ -15,11 +15,11 @@ public interface TaskManager {
 
     void createSubtask(Subtask subtask);
 
-    ArrayList<Task> getAllTasks();
+    List<Task> getAllTasks();
 
-    ArrayList<Epic> getAllEpics();
+    List<Epic> getAllEpics();
 
-    ArrayList<Subtask> getAllSubtasks();
+    List<Subtask> getAllSubtasks();
 
     void removeTaskById(int id);
 
@@ -39,7 +39,7 @@ public interface TaskManager {
 
     Subtask getSubtaskById(int id);
 
-    ArrayList<Subtask> getSubtasksFromEpic(int id);
+    List<Subtask> getSubtasksFromEpic(int id);
 
     void updateTask(Task task);
 

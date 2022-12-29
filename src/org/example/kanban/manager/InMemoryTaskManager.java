@@ -10,9 +10,15 @@ public class InMemoryTaskManager implements TaskManager {
     private int idGenerator = 0;
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
+
     @Override
     public List<Task> getHistory() {
-        return historyManager.getHistory();
+        if (historyManager.getHistory() != null) {
+            return historyManager.getHistory();
+        } else {
+            System.out.println("Ошибка! История просмотров не найдена");
+            return null;
+        }
     }
 
     /**
@@ -86,6 +92,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (tasks.containsKey(id)) {
             Task task = tasks.get(id);
             tasks.remove(id);
+            historyManager.remove(id);
         } else {
             System.out.println("Идентификатор таска указан не верно!");
         }
@@ -97,8 +104,10 @@ public class InMemoryTaskManager implements TaskManager {
             Epic epic = epics.get(id);
             for (int idSubtask : epic.getSubtaskIds()) { // удаляем все подзадачи данного эпика
                 subtasks.remove(idSubtask);
+                historyManager.remove(idSubtask);
             }
             epics.remove(id); // Удаляем Эпик
+            historyManager.remove(id);
         } else {
             System.out.println("Идентификатор эпика указан не верно!");
         }
@@ -110,6 +119,7 @@ public class InMemoryTaskManager implements TaskManager {
             Epic epic = epics.get(subtasks.get(id).getEpicId());
             epic.removeSubtaskId(id);
             subtasks.remove(id); // Удаляем подзадачу
+            historyManager.remove(id);
             updateStatusEpic(epic); // Обновляем статус Эпика
         }
     }
