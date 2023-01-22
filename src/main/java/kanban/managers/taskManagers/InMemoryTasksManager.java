@@ -1,14 +1,55 @@
-package org.example.kanban.manager;
+package main.java.kanban.managers.taskManagers;
 
-import org.example.kanban.model.*;
+import main.java.kanban.managers.Managers;
+import main.java.kanban.managers.historyManagers.HistoryManager;
+import main.java.kanban.tasks.Epic;
+import main.java.kanban.tasks.Subtask;
+import main.java.kanban.tasks.Task;
+import main.java.kanban.tasks.enums.TaskStatus;
+
 import java.util.*;
 
-public class InMemoryTaskManager implements TaskManager {
-    private HashMap<Integer, Task> tasks = new HashMap<>();
-    private HashMap<Integer, Epic> epics = new HashMap<>();
-    private HashMap<Integer, Subtask> subtasks = new HashMap<>();
+public class InMemoryTasksManager implements TasksManager {
+    protected HashMap<Integer, Task> tasks = new HashMap<>();
+    protected HashMap<Integer, Epic> epics = new HashMap<>();
+    protected HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private int idGenerator = 0;
-    private final HistoryManager historyManager = Managers.getDefaultHistory();
+    protected static final HistoryManager historyManager = Managers.getDefaultHistoryManager();
+
+
+    protected int id = 0; // УИН задач
+
+//метод на изменения статуса при изменении Subtask'a
+
+    public void updateStatusEpic(Epic epic) {
+        boolean isDone = true;
+        boolean isNew = true;
+        List<Subtask> subTaskList = getSubtasksFromEpic(epic.getId());
+        for (Subtask subTask : subTaskList) {
+            if (subTask.getStatus() == TaskStatus.IN_PROGRESS) {
+                isDone = false;
+                isNew = false;
+                break;
+            } else if (subTask.getStatus() == TaskStatus.DONE) {
+                isNew = false;
+                if (!isDone) {
+                    break;
+                }
+            } else if (subTask.getStatus() == TaskStatus.NEW) {
+                isDone = false;
+                if (!isNew) {
+                    break;
+                }
+            }
+        }
+        if (epic.getSubtaskIds().size() == 0 || isNew) {
+            epic.setStatus(TaskStatus.NEW);
+        } else if (isDone) {
+            epic.setStatus(TaskStatus.DONE);
+        } else {
+            epic.setStatus(TaskStatus.IN_PROGRESS);
+        }
+    }
 
 
     @Override
@@ -21,12 +62,6 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    /**
-     * создание новой задачи
-     *
-     * @param task - задача
-     */
-
     @Override
     public void createTask(Task task) { //Функция создания задачи. Сам объект должен передаваться в качестве параметра.
         if (task != null) {
@@ -37,9 +72,6 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    /**
-     * @param epic
-     */
     @Override
     public void createEpic(Epic epic) { //Функция создания задачи. Сам объект должен передаваться в качестве параметра.
         if (epic != null) {
@@ -50,9 +82,6 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    /**
-     * @param subtask
-     */
     @Override
     public void createSubtask(Subtask subtask) {
         if (subtask != null) {
@@ -77,12 +106,12 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Epic> getAllEpics() { // Получение списка всех задач.
+    public ArrayList<Epic> getAllEpics() { // Получение списка всех эпиков.
         return new ArrayList<>(epics.values());// Возвращаем список
     }
 
     @Override
-    public ArrayList<Subtask> getAllSubtasks() { // Получение списка всех задач.
+    public ArrayList<Subtask> getAllSubtasks() { // Получение списка всех субтасков.
         return new ArrayList<>(subtasks.values()); // Возвращаем список
     }
 
@@ -179,22 +208,6 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    //Получение списка всех подзадач определённого эпика.
-    @Override
-    public ArrayList<Subtask> getSubtasksFromEpic(int id) {
-        if (epics.containsKey(id)) {
-            Epic epic = epics.get(id);
-            ArrayList<Subtask> subtasksFromEpic = new ArrayList<>();
-            for (int idSubtask : epic.getSubtaskIds()) {
-                subtasksFromEpic.add(subtasks.get(idSubtask));
-            }
-            return subtasksFromEpic;
-        } else {
-            System.out.println("Идентификатор эпика указан не верно!");
-            return null;
-        }
-    }
-
     // изменение статуса задач
     // Обновление. Новая версия объекта
     // с верным идентификатором передаётся в виде параметра.
@@ -227,35 +240,20 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    //метод на изменения статуса при изменении org.example.kanban.task.Subtask'a
-
-    public void updateStatusEpic(Epic epic) {
-        boolean isDone = true;
-        boolean isNew = true;
-        List<Subtask> subTaskList = getSubtasksFromEpic(epic.getId());
-        for (Subtask subTask : subTaskList) {
-            if (subTask.getStatus() == TaskStatus.IN_PROGRESS) {
-                isDone = false;
-                isNew = false;
-                break;
-            } else if (subTask.getStatus() == TaskStatus.DONE) {
-                isNew = false;
-                if (!isDone) {
-                    break;
-                }
-            } else if (subTask.getStatus() == TaskStatus.NEW) {
-                isDone = false;
-                if (!isNew) {
-                    break;
-                }
+    //Получение списка всех подзадач определённого эпика.
+    @Override
+    public ArrayList<Subtask> getSubtasksFromEpic(int id) {
+        if (epics.containsKey(id)) {
+            Epic epic = epics.get(id);
+            ArrayList<Subtask> subtasksFromEpic = new ArrayList<>();
+            for (int idSubtask : epic.getSubtaskIds()) {
+                subtasksFromEpic.add(subtasks.get(idSubtask));
             }
-        }
-        if (epic.getSubtaskIds().size() == 0 || isNew) {
-            epic.setStatus(TaskStatus.NEW);
-        } else if (isDone) {
-            epic.setStatus(TaskStatus.DONE);
+            return subtasksFromEpic;
         } else {
-            epic.setStatus(TaskStatus.IN_PROGRESS);
+            System.out.println("Идентификатор эпика указан не верно!");
+            return null;
         }
     }
+
 }

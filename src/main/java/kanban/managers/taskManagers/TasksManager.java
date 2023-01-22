@@ -1,11 +1,11 @@
-package org.example.kanban.manager;
+package main.java.kanban.managers.taskManagers;
 
-import org.example.kanban.model.Epic;
-import org.example.kanban.model.Subtask;
-import org.example.kanban.model.Task;
+import main.java.kanban.tasks.Epic;
+import main.java.kanban.tasks.Subtask;
+import main.java.kanban.tasks.Task;
 import java.util.*;
 
-public interface TaskManager {
+public interface TasksManager {
 
     List getHistory(); // история просмотра
 

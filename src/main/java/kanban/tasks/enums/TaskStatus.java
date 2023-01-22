@@ -1,4 +1,4 @@
-package org.example.kanban.model;
+package main.java.kanban.tasks.enums;
 
 public enum TaskStatus {
     NEW,

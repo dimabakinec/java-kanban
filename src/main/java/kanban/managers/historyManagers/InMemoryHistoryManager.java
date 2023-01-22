@@ -1,5 +1,6 @@
-package org.example.kanban.manager;
-import org.example.kanban.model.Task;
+package main.java.kanban.managers.historyManagers;
+
+import main.java.kanban.tasks.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
@@ -22,6 +23,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         viewedTasks.remove(id);
     }
 
+    @Override
     public List<Task> getHistory() {
         return getTasks();
     }
