@@ -2,12 +2,11 @@ package main.java.kanban.utils;
 
 import main.java.kanban.managers.historyManagers.HistoryManager;
 import main.java.kanban.managers.taskManagers.TasksManager;
-import main.java.kanban.tasks.Task;
 import main.java.kanban.tasks.Epic;
 import main.java.kanban.tasks.Subtask;
-import main.java.kanban.tasks.enums.TaskType;
+import main.java.kanban.tasks.Task;
 import main.java.kanban.tasks.enums.TaskStatus;
-
+import main.java.kanban.tasks.enums.TaskType;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -72,7 +71,6 @@ public class Formatter {
             throw new IllegalArgumentException("Данный формат таска не поддерживается");
 
     }
-
 
 
 }

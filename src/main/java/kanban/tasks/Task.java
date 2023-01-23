@@ -1,9 +1,7 @@
 package main.java.kanban.tasks;
 
-import com.sun.source.util.TaskEvent;
 import main.java.kanban.tasks.enums.TaskStatus;
 import main.java.kanban.tasks.enums.TaskType;
-
 
 import java.time.Instant;
 
@@ -14,7 +12,7 @@ public class Task {
     private TaskStatus status;
     private Integer id;
     private String description;
-    private TaskType type = TASK; // Тип задачи.
+    private final TaskType type = TASK; // Тип задачи.
 
     public Task(String name, TaskStatus status, Integer id, String description) {
         this.name = name;
@@ -36,6 +34,7 @@ public class Task {
     public TaskType getType() {
         return type;
     }
+
     public String getName() {
         return name;
     }

@@ -4,7 +4,7 @@ import main.java.kanban.tasks.enums.TaskStatus;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class Epic extends Task {
     private ArrayList<Integer> subtaskIds = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return "Epic{" +
-                "subtaskIds=" + Arrays.asList(subtaskIds) +
+                "subtaskIds=" + Collections.singletonList(subtaskIds) +
                 ", nameEpic='" + super.getName() + '\'' +
                 ", status=" + super.getStatus() +
                 ", taskId=" + super.getId() +

@@ -1,24 +1,18 @@
 package main.java.kanban.managers.taskManagers;
 
 import main.java.kanban.managers.Managers;
-import main.java.kanban.managers.historyManagers.HistoryManager;
 import main.java.kanban.managers.taskManagers.exceptions.ManagerSaveException;
 import main.java.kanban.tasks.Epic;
 import main.java.kanban.tasks.Subtask;
 import main.java.kanban.tasks.Task;
-import main.java.kanban.tasks.enums.TaskStatus;
 import main.java.kanban.tasks.enums.TaskType;
+import main.java.kanban.utils.Formatter;
 
-import java.nio.charset.StandardCharsets;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import main.java.kanban.managers.taskManagers.*;
-import main.java.kanban.utils.Formatter;
 
 
 public class FileBackedTasksManager extends InMemoryTasksManager {
@@ -148,7 +142,6 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
         return super.getSubtasksFromEpic(id);
     }
 
-
     // сохранение в файл
     protected void save() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath.toFile()));
@@ -168,57 +161,35 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
 
     // загрузка из файла
     public static FileBackedTasksManager load(Path filePath) {
-
-        var fileBackedTasksManager = Managers.getDefaultBackedManager();
-
+        var fileBackedTasksManager = Managers.getDefaultManager();
         int initialID = 0;
-
         try {
-
             var fileName = Files.readString(filePath);
-
             var lines = fileName.split("\n");
-
             for (int i = 1; i < lines.length - 2; i++) {
-
                 var task = Formatter.tasksFromString(lines[i]);
                 var type = lines[i].split(",")[1];
-
                 if (task.getId() > initialID)
                     initialID = task.getId();
-
                 if (TaskType.valueOf(type).equals(TaskType.TASK)) {
-
                     fileBackedTasksManager.createTask(task);
                     historyManager.add(fileBackedTasksManager.getTaskById(task.getId()));
-
                 }
-
                 if (TaskType.valueOf(type).equals(TaskType.EPIC)) {
-
                     var epic = (Epic) task;
                     fileBackedTasksManager.createEpic(epic);
                     historyManager.add(fileBackedTasksManager.getEpicById(epic.getId()));
-
                 }
-
                 if (TaskType.valueOf(type).equals(TaskType.SUBTASK)) {
-
                     var subtask = (Subtask) task;
                     fileBackedTasksManager.createSubtask(subtask);
                     historyManager.add(fileBackedTasksManager.getSubtaskById(subtask.getId()));
-
                 }
             }
-
         } catch (IOException e) {
-
             throw new ManagerSaveException("Ошибка загрузки из файла");
-
         }
-
-        return fileBackedTasksManager;
-
+        return (FileBackedTasksManager) fileBackedTasksManager;
     }
 
 

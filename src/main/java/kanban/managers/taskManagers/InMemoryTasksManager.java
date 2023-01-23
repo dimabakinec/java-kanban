@@ -7,7 +7,9 @@ import main.java.kanban.tasks.Subtask;
 import main.java.kanban.tasks.Task;
 import main.java.kanban.tasks.enums.TaskStatus;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class InMemoryTasksManager implements TasksManager {
     protected HashMap<Integer, Task> tasks = new HashMap<>();
