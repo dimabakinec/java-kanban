@@ -16,7 +16,7 @@ import java.util.List;
 
 
 public class FileBackedTasksManager extends InMemoryTasksManager {
-    private static final Path filePath = Path.of("src/main/resources/SaveDataFile.csv");
+    private static final Path filePath = Path.of("/Users/dimabakinec/Desktop/MyJava/java-kanban/src/main/resources/SaveDataFile.csv");
 
     @Override
     public void updateStatusEpic(Epic epic) {
@@ -191,6 +191,4 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
         }
         return (FileBackedTasksManager) fileBackedTasksManager;
     }
-
-
 }

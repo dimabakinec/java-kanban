@@ -1,1 +1,5 @@
+id,type,name,status,description,startTime,duration,endTime,epic
+Task{name='Задача №2', status=NEW, id=2, description='Описание задачи №2'}
+Epic{subtaskIds=[[]], nameEpic='Эпик №2', status=NEW, taskId=7, description='Описание эпика №2'}
 
+2,7,
