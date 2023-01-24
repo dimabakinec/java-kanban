@@ -1,56 +1,70 @@
 package main.java.kanban.tasks;
 
 import main.java.kanban.tasks.enums.TaskStatus;
+import main.java.kanban.tasks.enums.TaskType;
 
-import java.time.Instant;
+import static main.java.kanban.tasks.enums.TaskType.EPIC;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 
 public class Epic extends Task {
-    private ArrayList<Integer> subtaskIds = new ArrayList<>();
+    private final TaskType type = EPIC; // Тип задачи.
+    private LocalDateTime endTime; // дата и время завершения эпика (расчетное).
+    private final ArrayList<Integer> listIdSubtasks = new ArrayList<>(); // Список уин подзадач
 
-    public Epic() {
+    public Epic(int uin, String name, TaskStatus status, String description, long duration, LocalDateTime startTime) {
+        super(uin, name, status, description, duration, startTime);
+        setType(EPIC);
     }
 
-    public Epic(String name, TaskStatus status, int taskId, String description, ArrayList<Integer> subtaskIds) {
-        super(name, status, taskId, description);
-        this.subtaskIds = subtaskIds;
+    public Epic(String name, String description) {
+        super(name, description);
+        setType(EPIC);
     }
 
-    public Epic(int uin, String name, TaskStatus status, String description) {
+    public Epic(int uin, String name, String description) {
+        super(uin, name, description);
+        setType(EPIC);
     }
 
-    public Epic(int id, String name, TaskStatus status, String description, Instant startTime, long duration) {
+    public ArrayList<Integer> getListIdSubtasks() {
+        return listIdSubtasks;
     }
 
-    public void setSubtaskIds(ArrayList<Integer> subtaskIds) {
-
-        this.subtaskIds = subtaskIds;
+    public void removeListIdSubtask(Integer index) {
+        listIdSubtasks.remove(index);
     }
 
-    public ArrayList<Integer> getSubtaskIds() {
-
-        return subtaskIds;
+    public void addListIdSubtasks(int idSubtask) {
+        listIdSubtasks.add(idSubtask);
     }
 
-    public void removeSubtaskId(Integer index) {
-
-        subtaskIds.remove(index);
+    public void clearListIdSubtasks() {
+        listIdSubtasks.clear();
     }
 
-    public void addSubtaskId(int idSubtask) {
-
-        subtaskIds.add(idSubtask);
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     @Override
-    public String toString() {
-        return "Epic{" +
-                "subtaskIds=" + Collections.singletonList(subtaskIds) +
-                ", nameEpic='" + super.getName() + '\'' +
-                ", status=" + super.getStatus() +
-                ", taskId=" + super.getId() +
-                ", description='" + super.getDescription() +
-                '\'' + '}';
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    @Override
+    public String toString() { // нужен для информативного результата
+        return  "Epic{" +
+                "uin=" + uin +
+                ", type=" + getType() +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", description='" + description + '\'' +
+                ", duration=" + duration.toMinutes() +
+                ", startTime=" + ((startTime == null) ? "null" : startTime.format(FORMATTER)) +
+                ", endTime=" + ((endTime == null) ? "null" : endTime.format(FORMATTER)) +
+                ", listIdSubtasks=" + Arrays.asList(listIdSubtasks) +
+                '}';
     }
 }

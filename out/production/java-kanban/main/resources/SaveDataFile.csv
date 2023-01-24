@@ -1,5 +1,11 @@
-id,type,name,status,description,startTime,duration,endTime,epic
-Task{name='Задача №2', status=NEW, id=2, description='Описание задачи №2'}
-Epic{subtaskIds=[[]], nameEpic='Эпик №2', status=NEW, taskId=7, description='Описание эпика №2'}
+id,type,name,status,description,duration,startTime,epic
+1,TASK,Задача №1,NEW,Описание задачи №1,0,null,null
+2,TASK,Задача №2,NEW,Описание задачи №2,50,2022-12-27T20:00,null
+0,EPIC,Эпик №2,NEW,Описание эпика №2,0,null,null
+0,EPIC,Эпик №1,NEW,Описание эпика №1,0,null,null
+0,EPIC,Эпик №2,NEW,Описание эпика №2,0,null,null
+4,SUBTASK,Подзадача №1 эпика №1,NEW,Описание подзадачи №1 эпика №1,0,null,0
+5,SUBTASK,Подзадача №2 эпика №1,NEW,Описание подзадачи №2 эпика №2,30,2022-12-27T21:00,0
+6,SUBTASK,Подзадача №2 эпика №1,NEW,Описание подзадачи №2 эпика №2,40,2022-12-27T22:00,0
 
-2,7,
+5,1,4,6,0

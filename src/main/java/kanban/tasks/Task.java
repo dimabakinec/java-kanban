@@ -2,37 +2,56 @@ package main.java.kanban.tasks;
 
 import main.java.kanban.tasks.enums.TaskStatus;
 import main.java.kanban.tasks.enums.TaskType;
-
-import java.time.Instant;
-
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import static main.java.kanban.tasks.enums.TaskType.TASK;
 
 public class Task {
-    private String name;
-    private TaskStatus status;
-    private Integer id;
-    private String description;
-    private final TaskType type = TASK; // Тип задачи.
+    protected int uin; // Уникальный идентификационный номер задачи, по которому её можно будет найти.
+    protected TaskType type = TASK; // Тип задачи.
+    protected String name; // Название, кратко описывающее суть задачи (например, «Переезд»).
+    protected TaskStatus status; // Статус, отображающий её прогресс.
+    protected String description; // Описание, в котором раскрываются детали.
+    protected Duration duration = Duration.ofMinutes(0); // Продолжительность задачи, оценка того, сколько времени она займёт в минутах (число).
+    protected LocalDateTime startTime = null; // Дата и время, когда предполагается приступить к выполнению задачи.
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
-    public Task(String name, TaskStatus status, Integer id, String description) {
+    public Task(int uin, String name, TaskStatus status, String description
+            , long duration, LocalDateTime startTime) {
+        this.uin = uin;
         this.name = name;
         this.status = status;
-        this.id = id;
+        this.description = description;
+        this.duration = Duration.ofMinutes(duration);
+        this.startTime = startTime;
+    }
+
+    public Task(String name, String description) {
+        this.name = name;
         this.description = description;
     }
 
-    public Task() {
-
+    public Task(String name, String description, long duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.duration = Duration.ofMinutes(duration);;
+        this.startTime = startTime;
     }
 
-    public Task(int uin, String name, TaskStatus status, String description, long duration) {
-    }
-
-    public Task(int id, String name, TaskStatus status, String description, Instant startTime, long duration) {
+    public Task(int uin, String name, String description) {
+        this.uin = uin;
+        this.name = name;
+        this.description = description;
     }
 
     public TaskType getType() {
         return type;
+    }
+
+    public void setType(TaskType type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -48,37 +67,77 @@ public class Task {
     }
 
     public void setStatus(TaskStatus status) {
-
         this.status = status;
     }
 
-    public int getId() {
-
-        return id;
-    }
-
-    public void setId(int id) {
-
-        this.id = id;
-    }
-
     public String getDescription() {
-
         return description;
     }
 
     public void setDescription(String description) {
-
         this.description = description;
+    }
+
+    public int getUin() {
+        return uin;
+    }
+
+    public void setUin(int uin) {
+        this.uin = uin;
+    }
+
+    public Integer getEpicId() {
+        return null;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    //метод рассчитывает время завершения задачи, которое рассчитывается исходя из startTime и duration
+    public LocalDateTime getEndTime() {
+        if (startTime != null) {
+            return startTime.plus(duration);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return uin == task.uin && type == task.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uin, type);
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "name='" + name + '\'' +
+                "uin=" + uin +
+                ", type=" + type +
+                ", name='" + name + '\'' +
                 ", status=" + status +
-                ", id=" + id +
-                ", description='" + description + '\'' +
+                ", description='" + description +
+                ", duration=" + duration.toMinutes() + '\'' +
+                ", startTime=" + ((startTime == null) ? "null" : startTime.format(FORMATTER)) +
+                ", endTime=" + ((getEndTime() == null) ? "null" : getEndTime().format(FORMATTER)) +
                 '}';
     }
 }

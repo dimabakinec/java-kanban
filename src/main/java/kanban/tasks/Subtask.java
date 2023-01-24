@@ -1,31 +1,43 @@
 package main.java.kanban.tasks;
 
 import main.java.kanban.tasks.enums.TaskStatus;
-
-import java.time.Instant;
+import main.java.kanban.tasks.enums.TaskType;
+import java.time.LocalDateTime;
+import static main.java.kanban.tasks.enums.TaskType.SUBTASK;
 
 public class Subtask extends Task {
-    private int epicId;
+    private Integer epicId;
+    private final TaskType type = SUBTASK; // Тип задачи.
 
-    public Subtask(String name, TaskStatus status, int taskId, String description, int epicId) {
-        super(name, status, taskId, description);
+    public Subtask(int uin, String name, TaskStatus status, String description, long duration, LocalDateTime startTime, Integer epicId) {
+        super(uin, name, status, description, duration, startTime);
         this.epicId = epicId;
+        setType(SUBTASK);
     }
 
-    public Subtask() {
+    public Subtask(String name, String description, long duration, LocalDateTime startTime, Integer epicId) {
+        super(name, description, duration, startTime);
+        this.epicId = epicId;
+        setType(SUBTASK);
     }
 
-    public Subtask(int uin, String name, TaskStatus status, String description, long duration, Integer epicId) {
-    }
-
-    public Subtask(int id, String name, TaskStatus status, String description, Instant startTime, long duration, int epicID) {
-    }
-
-    public int getEpicId() {
+    @Override
+    public Integer getEpicId() {
         return epicId;
     }
 
-    public void setEpicId(int epicId) {
-        this.epicId = epicId;
+    @Override
+    public String toString() {
+        return  "Subtask{" +
+                "uin=" + uin +
+                ", type=" + getType() +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", description='" + description +
+                ", duration=" + duration.toMinutes() + '\'' +
+                ", startTime=" + ((startTime == null) ? "null" : startTime.format(FORMATTER)) +
+                ", endTime=" + ((getEndTime() == null) ? "null" : getEndTime().format(FORMATTER)) +
+                ", epicId=" + epicId +
+                '}';
     }
 }

@@ -1,7 +1,6 @@
 package main.java.kanban.managers.historyManagers;
 
 import main.java.kanban.tasks.Task;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,20 +10,23 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node<Task> head; // Указатель на первый элемент списка.
     private Node<Task> tail; // Указатель на последний элемент списка.
     private final Map<Integer, Node<Task>> viewedTasks = new HashMap<>();
-    protected static HistoryManager historyManager;
 
     @Override
     public void add(Task task) {
-        Node<Task> node = linkLast(task);
-        if (viewedTasks.containsKey(task.getId()))
-            removeNode(viewedTasks.get(task.getId()));
-        viewedTasks.put(task.getId(), node);
+        if (task != null) {
+            remove(task.getUin());
+            linkLast(task); // Создаем новый узел и добавляем задачу в tail
+            viewedTasks.put(task.getUin(), tail);
+        }
     }
 
     @Override //удаление задач из списка просмотренных задач
     public void remove(int id) {
-        removeNode(viewedTasks.get(id));
-        viewedTasks.remove(id);
+        if (viewedTasks.containsKey(id)) {
+            Node<Task> node = viewedTasks.get(id); // Находим узел по id Task.
+            removeNode(node); // Вырезаем узел из списка.
+            viewedTasks.remove(id); // удаляем запись из Map.
+        }
     }
 
     @Override
@@ -70,12 +72,12 @@ public class InMemoryHistoryManager implements HistoryManager {
         node.data = null;
     }
 
-    private static class Node<Task> {
+     static class Node<Task> {
         Task data; // Данные внутри элемента.
         Node<Task> next;
         Node<Task> prev; // Ссылка на предыдущий узел.
 
-        Node(Node<Task> prev, Task data, Node<Task> next) {
+        public Node(Node<Task> prev, Task data, Node<Task> next) {
             this.prev = prev;
             this.data = data;
             this.next = next;
