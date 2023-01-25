@@ -2,16 +2,15 @@ package main.java.kanban.tasks;
 
 import main.java.kanban.tasks.enums.TaskStatus;
 import main.java.kanban.tasks.enums.TaskType;
-
 import static main.java.kanban.tasks.enums.TaskType.EPIC;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Epic extends Task {
-    private final TaskType type = EPIC; // Тип задачи.
-    private LocalDateTime endTime; // дата и время завершения эпика (расчетное).
-    private final ArrayList<Integer> listIdSubtasks = new ArrayList<>(); // Список уин подзадач
+    private final TaskType type = EPIC;
+    private LocalDateTime endTime;
+    private final ArrayList<Integer> listIdSubtasks = new ArrayList<>();
 
     public Epic(int uin, String name, TaskStatus status, String description, long duration, LocalDateTime startTime) {
         super(uin, name, status, description, duration, startTime);

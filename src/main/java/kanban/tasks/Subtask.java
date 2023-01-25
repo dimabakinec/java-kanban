@@ -7,7 +7,7 @@ import static main.java.kanban.tasks.enums.TaskType.SUBTASK;
 
 public class Subtask extends Task {
     private Integer epicId;
-    private final TaskType type = SUBTASK; // Тип задачи.
+    private final TaskType type = SUBTASK;
 
     public Subtask(int uin, String name, TaskStatus status, String description, long duration, LocalDateTime startTime, Integer epicId) {
         super(uin, name, status, description, duration, startTime);

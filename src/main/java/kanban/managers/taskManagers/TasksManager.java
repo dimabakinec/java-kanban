@@ -3,12 +3,11 @@ package main.java.kanban.managers.taskManagers;
 import main.java.kanban.tasks.Epic;
 import main.java.kanban.tasks.Subtask;
 import main.java.kanban.tasks.Task;
-
 import java.util.List;
 
 public interface TasksManager {
 
-    List getHistory(); // история просмотра
+    List getHistory();
 
     void createTask(Task task);
 
@@ -47,5 +46,4 @@ public interface TasksManager {
     void updateEpic(Epic epic);
 
     void updateSubtask(Subtask subtask);
-
 }

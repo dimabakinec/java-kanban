@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        System.out.println("Поехали!");
+        System.out.println("Start application...");
 
         TasksManager taskManager = Managers.getDefaultManager();
 
@@ -55,7 +55,7 @@ public class Main {
         System.out.println(taskManager.getAllEpics());
         System.out.println(taskManager.getAllSubtasks());
 
-        // Запрашиваем созданные задачи несколько раз и проверяем историю на дубли и порядок.
+        // We request the created tasks several times and check the history for duplicates and order.
         System.out.println("Запрашиваем созданные задачи:");
         System.out.println(taskManager.getEpicById(1));
         System.out.println(taskManager.getSubtaskById(4));

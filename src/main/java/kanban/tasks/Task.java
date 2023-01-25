@@ -9,13 +9,13 @@ import java.util.Objects;
 import static main.java.kanban.tasks.enums.TaskType.TASK;
 
 public class Task {
-    protected int uin; // Уникальный идентификационный номер задачи, по которому её можно будет найти.
-    protected TaskType type = TASK; // Тип задачи.
-    protected String name; // Название, кратко описывающее суть задачи (например, «Переезд»).
-    protected TaskStatus status; // Статус, отображающий её прогресс.
-    protected String description; // Описание, в котором раскрываются детали.
-    protected Duration duration = Duration.ofMinutes(0); // Продолжительность задачи, оценка того, сколько времени она займёт в минутах (число).
-    protected LocalDateTime startTime = null; // Дата и время, когда предполагается приступить к выполнению задачи.
+    protected int uin; //The unique identification number of the task by which it can be found.
+    protected TaskType type = TASK;
+    protected String name;
+    protected TaskStatus status;
+    protected String description;
+    protected Duration duration = Duration.ofMinutes(0);
+    protected LocalDateTime startTime = null;
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     public Task(int uin, String name, TaskStatus status, String description
@@ -106,7 +106,7 @@ public class Task {
         this.startTime = startTime;
     }
 
-    //метод рассчитывает время завершения задачи, которое рассчитывается исходя из startTime и duration
+    //the method calculates the task completion time, which is calculated based on startTime and duration
     public LocalDateTime getEndTime() {
         if (startTime != null) {
             return startTime.plus(duration);

@@ -7,25 +7,25 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private Node<Task> head; // Указатель на первый элемент списка.
-    private Node<Task> tail; // Указатель на последний элемент списка.
+    private Node<Task> head; // A pointer to the first element of the list.
+    private Node<Task> tail; // A pointer to the last element of the list.
     private final Map<Integer, Node<Task>> viewedTasks = new HashMap<>();
 
     @Override
     public void add(Task task) {
         if (task != null) {
             remove(task.getUin());
-            linkLast(task); // Создаем новый узел и добавляем задачу в tail
+            linkLast(task); // Create a new node and add a task to tail
             viewedTasks.put(task.getUin(), tail);
         }
     }
 
-    @Override //удаление задач из списка просмотренных задач
+    @Override // deleting tasks from the list of viewed tasks
     public void remove(int id) {
         if (viewedTasks.containsKey(id)) {
-            Node<Task> node = viewedTasks.get(id); // Находим узел по id Task.
-            removeNode(node); // Вырезаем узел из списка.
-            viewedTasks.remove(id); // удаляем запись из Map.
+            Node<Task> node = viewedTasks.get(id); // Find the node by id Task.
+            removeNode(node); // Remove a node from the list.
+            viewedTasks.remove(id); // remove entry from Map.
         }
     }
 
@@ -73,9 +73,9 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
      static class Node<Task> {
-        Task data; // Данные внутри элемента.
+        Task data; // The data inside the element.
         Node<Task> next;
-        Node<Task> prev; // Ссылка на предыдущий узел.
+        Node<Task> prev; // Link to the previous node.
 
         public Node(Node<Task> prev, Task data, Node<Task> next) {
             this.prev = prev;
