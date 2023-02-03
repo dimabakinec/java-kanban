@@ -1,6 +1,6 @@
-package main.java.kanban.managers.historyManagers;
+package kanban.managers.historyManagers;
 
-import main.java.kanban.tasks.Task;
+import kanban.tasks.Task;
 import java.util.List;
 
 public interface HistoryManager {

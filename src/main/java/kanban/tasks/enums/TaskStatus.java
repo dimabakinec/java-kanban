@@ -1,4 +1,4 @@
-package main.java.kanban.tasks.enums;
+package kanban.tasks.enums;
 
 public enum TaskStatus {
     NEW,

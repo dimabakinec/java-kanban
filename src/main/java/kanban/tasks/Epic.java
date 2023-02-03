@@ -1,8 +1,8 @@
-package main.java.kanban.tasks;
+package kanban.tasks;
 
-import main.java.kanban.tasks.enums.TaskStatus;
-import main.java.kanban.tasks.enums.TaskType;
-import static main.java.kanban.tasks.enums.TaskType.EPIC;
+import kanban.tasks.enums.TaskStatus;
+import kanban.tasks.enums.TaskType;
+import static kanban.tasks.enums.TaskType.EPIC;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;

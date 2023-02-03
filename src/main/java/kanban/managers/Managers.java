@@ -1,13 +1,13 @@
-package main.java.kanban.managers;
+package kanban.managers;
 
-import main.java.kanban.managers.historyManagers.HistoryManager;
-import main.java.kanban.managers.historyManagers.InMemoryHistoryManager;
-import main.java.kanban.managers.taskManagers.FileBackedTasksManager;
-import main.java.kanban.managers.taskManagers.TasksManager;
+import kanban.managers.historyManagers.HistoryManager;
+import kanban.managers.historyManagers.InMemoryHistoryManager;
+import kanban.managers.taskManagers.FileBackedTasksManager;
+import kanban.managers.taskManagers.TasksManager;
 import java.io.File;
 
 public class Managers {
-    /* менеджер по умолчанию. чтобы использовать InMemoryTasksManager();
+    /* менеджер по умолчанию, чтобы использовать InMemoryTasksManager();
        сменить на другой "return new..." */
 
     public static TasksManager getDefaultManager() {

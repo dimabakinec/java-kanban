@@ -1,12 +1,12 @@
-package main.java.kanban.tasks;
+package kanban.tasks;
 
-import main.java.kanban.tasks.enums.TaskStatus;
-import main.java.kanban.tasks.enums.TaskType;
+import kanban.tasks.enums.TaskStatus;
+import kanban.tasks.enums.TaskType;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import static main.java.kanban.tasks.enums.TaskType.TASK;
+import static kanban.tasks.enums.TaskType.TASK;
 
 public class Task {
     protected int uin; //The unique identification number of the task by which it can be found.

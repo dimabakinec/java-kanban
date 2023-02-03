@@ -1,20 +1,25 @@
-package main.java.kanban.managers.taskManagers;
+package kanban.managers.taskManagers;
 
-import main.java.kanban.managers.Managers;
-import main.java.kanban.managers.historyManagers.HistoryManager;
-import main.java.kanban.tasks.Epic;
-import main.java.kanban.tasks.Subtask;
-import main.java.kanban.tasks.Task;
-import main.java.kanban.tasks.enums.TaskStatus;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import kanban.managers.Managers;
+import kanban.managers.historyManagers.HistoryManager;
+import kanban.tasks.Epic;
+import kanban.tasks.Subtask;
+import kanban.tasks.Task;
+import kanban.tasks.enums.TaskStatus;
+
+import java.util.*;
 
 public class InMemoryTasksManager implements TasksManager {
     protected HashMap<Integer, Task> tasks = new HashMap<>();
     protected HashMap<Integer, Epic> epics = new HashMap<>();
     protected HashMap<Integer, Subtask> subtasks = new HashMap<>();
     protected final HistoryManager historyManager = Managers.getDefaultHistoryManager();
+    protected final Set<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime
+                    , Comparator.nullsLast(Comparator.naturalOrder()))
+            .thenComparing(Task::getUin)); // Список задач в порядке приоритета по startTime.
+
+
+
     private int idGenerator = 0;
     protected int id = 0; // uin tasks
 
@@ -226,6 +231,11 @@ public class InMemoryTasksManager implements TasksManager {
         } else {
             System.out.println("Ошибка ввода");
         }
+    }
+
+    @Override
+    public Set<Task> getPrioritizedTasks() { // Метод возвращает список задач в порядке приоритета по startTime.
+        return prioritizedTasks;
     }
 
     //Getting a list of all subtasks of a specific epic.

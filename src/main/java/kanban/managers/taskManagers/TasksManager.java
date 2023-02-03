@@ -1,9 +1,10 @@
-package main.java.kanban.managers.taskManagers;
+package kanban.managers.taskManagers;
 
-import main.java.kanban.tasks.Epic;
-import main.java.kanban.tasks.Subtask;
-import main.java.kanban.tasks.Task;
+import kanban.tasks.Epic;
+import kanban.tasks.Subtask;
+import kanban.tasks.Task;
 import java.util.List;
+import java.util.Set;
 
 public interface TasksManager {
 
@@ -46,4 +47,6 @@ public interface TasksManager {
     void updateEpic(Epic epic);
 
     void updateSubtask(Subtask subtask);
+
+    Set<Task> getPrioritizedTasks();
 }

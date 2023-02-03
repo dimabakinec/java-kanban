@@ -1,18 +1,19 @@
-package main.java.kanban.managers.taskManagers;
+package kanban.managers.taskManagers;
 
-import main.java.kanban.managers.Managers;
-import main.java.kanban.managers.taskManagers.exceptions.ManagerSaveException;
-import main.java.kanban.tasks.Epic;
-import main.java.kanban.tasks.Subtask;
-import main.java.kanban.tasks.Task;
-import main.java.kanban.utils.Formatter;
+import kanban.managers.Managers;
+import kanban.managers.taskManagers.exceptions.ManagerException;
+import kanban.tasks.Epic;
+import kanban.tasks.Subtask;
+import kanban.tasks.Task;
+import kanban.tasks.enums.TaskType;
+import kanban.utils.Formatter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-public class FileBackedTasksManager extends InMemoryTasksManager {
+public class FileBackedTasksManager extends kanban.managers.taskManagers.InMemoryTasksManager {
     private final File file;
     private Formatter formatter = new Formatter();
 
@@ -33,7 +34,20 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
                 while (!(value = reader.readLine()).isBlank()) { // to empty line
                     task = tasksManager.formatter.tasksFromString(value);
                     tasksManager.addTasksToTheMap(task);
+
+                    if (task.getType() != TaskType.EPIC) {
+                        tasksManager.prioritizedTasks.add(task);
+                    }
+
+                    if (task.getUin() > maxId) {
+                        maxId = task.getUin();
+                    }
+
+
                 }
+
+
+
                 String lineHistoryTask = reader.readLine();
                 if (lineHistoryTask != null) {
                     List<Integer> idHistoryTask = Formatter.historyFromString(lineHistoryTask);
@@ -45,7 +59,7 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
                 tasksManager.id = maxId;
             }
         } catch (IOException e) {
-            throw new ManagerSaveException("Произошла ошибка при чтении данных менеджера из файла.");
+            throw new ManagerException("Произошла ошибка при чтении данных менеджера из файла.");
         }
         return tasksManager;
     }
@@ -63,7 +77,7 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
             final String lineHistoryTask = formatter.historyToString(historyManager);
             writer.write(lineHistoryTask);
         } catch (IOException exception) {
-            throw new ManagerSaveException("Произошла ошибка при сохранении данных.");
+            throw new ManagerException("Произошла ошибка при сохранении данных.");
         }
     }
 
@@ -114,7 +128,7 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
     public static void main(String[] args) {
         System.out.println("Start application...");
 
-        TasksManager taskManager = Managers.getDefaultManager();
+        kanban.managers.taskManagers.TasksManager taskManager = Managers.getDefaultManager();
 
         System.out.println("Список: " + taskManager.getAllTasks());
         System.out.println();

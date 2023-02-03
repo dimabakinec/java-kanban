@@ -1,9 +1,9 @@
-package main.java.kanban.tasks;
+package kanban.tasks;
 
-import main.java.kanban.tasks.enums.TaskStatus;
-import main.java.kanban.tasks.enums.TaskType;
+import kanban.tasks.enums.TaskStatus;
+import kanban.tasks.enums.TaskType;
 import java.time.LocalDateTime;
-import static main.java.kanban.tasks.enums.TaskType.SUBTASK;
+import static kanban.tasks.enums.TaskType.SUBTASK;
 
 public class Subtask extends Task {
     private Integer epicId;

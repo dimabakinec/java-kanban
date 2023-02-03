@@ -1,13 +1,14 @@
-package main.java.kanban;
+package kanban;
+
 /*
 Sprint 6 "yandexPracticum"
 by Dmitry Bartenev
  */
-import main.java.kanban.managers.Managers;
-import main.java.kanban.managers.taskManagers.TasksManager;
-import main.java.kanban.tasks.Epic;
-import main.java.kanban.tasks.Subtask;
-import main.java.kanban.tasks.Task;
+import kanban.managers.Managers;
+import kanban.managers.taskManagers.TasksManager;
+import kanban.tasks.Epic;
+import kanban.tasks.Subtask;
+import kanban.tasks.Task;
 import java.io.IOException;
 import java.time.LocalDateTime;
 

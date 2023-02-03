@@ -1,4 +1,4 @@
-package main.java.kanban.managers.historyManagers;
+package kanban.managers.historyManagers;
 
 class Node<E> {
     E item;

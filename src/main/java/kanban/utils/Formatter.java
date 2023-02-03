@@ -1,11 +1,11 @@
-package main.java.kanban.utils;
+package kanban.utils;
 
-import main.java.kanban.managers.historyManagers.HistoryManager;
-import main.java.kanban.tasks.Epic;
-import main.java.kanban.tasks.Subtask;
-import main.java.kanban.tasks.Task;
-import main.java.kanban.tasks.enums.TaskStatus;
-import main.java.kanban.tasks.enums.TaskType;
+import kanban.managers.historyManagers.HistoryManager;
+import kanban.tasks.Epic;
+import kanban.tasks.Subtask;
+import kanban.tasks.Task;
+import kanban.tasks.enums.TaskStatus;
+import kanban.tasks.enums.TaskType;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
