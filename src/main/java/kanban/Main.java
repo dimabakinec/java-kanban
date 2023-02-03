@@ -1,7 +1,7 @@
 package kanban;
 
 /*
-Sprint 6 "yandexPracticum"
+Sprint 7 "yandexPracticum"
 by Dmitry Bartenev
  */
 import kanban.managers.Managers;
