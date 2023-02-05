@@ -4,16 +4,18 @@ package kanban;
 Sprint 7 "yandexPracticum"
 by Dmitry Bartenev
  */
+
 import kanban.managers.Managers;
 import kanban.managers.taskManagers.TasksManager;
 import kanban.tasks.Epic;
 import kanban.tasks.Subtask;
 import kanban.tasks.Task;
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.time.LocalDateTime;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedIOException {
         System.out.println("Start application...");
 
         TasksManager taskManager = Managers.getDefaultManager();
@@ -66,5 +68,8 @@ public class Main {
         System.out.println(taskManager.getSubtaskById(6));
         System.out.println(taskManager.getEpicById(3));
         System.out.println("История просмотра: " + taskManager.getHistory());
+
+        System.out.println("\n" + "Список задач в порядке приоритета: ");
+        taskManager.getPrioritizedTasks().forEach(System.out::println);
     }
 }
