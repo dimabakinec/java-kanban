@@ -3,141 +3,162 @@ package kanban.tasks;
 import kanban.tasks.enums.TaskStatus;
 import kanban.tasks.enums.TaskType;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import static kanban.tasks.enums.TaskType.TASK;
 
 public class Task {
-    protected int uin; //The unique identification number of the task by which it can be found.
-    protected TaskType type = TASK;
-    protected String name;
-    protected TaskStatus status;
-    protected String description;
-    protected Duration duration = Duration.ofMinutes(0);
-    protected LocalDateTime startTime = null;
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
-    public Task(int uin, String name, TaskStatus status, String description
-            , long duration, LocalDateTime startTime) {
-        this.uin = uin;
-        this.name = name;
-        this.status = status;
+    protected final String description;
+    protected TaskStatus taskStatus;
+    protected TaskType taskType;
+    protected final String name;
+    protected Instant startTime;
+    protected long duration;
+    protected int id;
+
+    public Task(String name,
+                String description,
+                Instant startTime,
+                long duration) {
+
+        this.taskStatus = taskStatus.NEW;
         this.description = description;
-        this.duration = Duration.ofMinutes(duration);
+        this.taskType = TaskType.TASK;
         this.startTime = startTime;
+        this.duration = duration;
+        this.name = name;
+
     }
 
-    public Task(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
+    public Task(int id,
+                String name,
+                TaskStatus taskStatus,
+                String description,
+                Instant startTime,
+                long duration) {
 
-    public Task(String name, String description, long duration, LocalDateTime startTime) {
-        this.name = name;
         this.description = description;
-        this.duration = Duration.ofMinutes(duration);;
+        this.taskType = TaskType.TASK;
         this.startTime = startTime;
-    }
-
-    public Task(int uin, String name, String description) {
-        this.uin = uin;
+        this.taskStatus = taskStatus;
+        this.duration = duration;
         this.name = name;
-        this.description = description;
+        this.id = id;
+
     }
 
-    public TaskType getType() {
-        return type;
+    public Instant getStartTime() {
+
+        return startTime;
+
     }
 
-    public void setType(TaskType type) {
-        this.type = type;
+    public Instant getEndTime() {
+
+        final byte SECONDS_IN_ONE_MINUTE = 60;
+
+        return startTime.plusSeconds(duration * SECONDS_IN_ONE_MINUTE);
+
     }
 
     public String getName() {
+
         return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public TaskStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TaskStatus status) {
-        this.status = status;
     }
 
     public String getDescription() {
+
         return description;
+
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public int getId() {
+
+        return id;
+
     }
 
-    public int getUin() {
-        return uin;
+    public void setId(int id) {
+
+        this.id = id;
+
     }
 
-    public void setUin(int uin) {
-        this.uin = uin;
+    public TaskStatus gettaskStatus() {
+
+        return taskStatus;
+
     }
 
-    public Integer getEpicId() {
-        return null;
+    public void setTaskStatus(TaskStatus taskStatus) {
+
+        this.taskStatus = taskStatus;
+
     }
 
-    public Duration getDuration() {
-        return duration;
+    public TaskType getTaskType() {
+
+        return taskType;
+
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
+    public void setStartTime(Instant startTime) {
 
-    public void setDuration(Duration duration) {
-        this.duration = duration;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+
     }
 
-    //the method calculates the task completion time, which is calculated based on startTime and duration
-    public LocalDateTime getEndTime() {
-        if (startTime != null) {
-            return startTime.plus(duration);
-        }
-        return null;
+    public long getDuration() {
+
+        return duration;
+
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return uin == task.uin && type == task.type;
-    }
+    public void setDuration(long duration) {
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(uin, type);
+        this.duration = duration;
+
     }
 
     @Override
     public String toString() {
-        return "Task{" +
-                "uin=" + uin +
-                ", type=" + type +
-                ", name='" + name + '\'' +
-                ", status=" + status +
-                ", description='" + description +
-                ", duration=" + duration.toMinutes() + '\'' +
-                ", startTime=" + ((startTime == null) ? "null" : startTime.format(FORMATTER)) +
-                ", endTime=" + ((getEndTime() == null) ? "null" : getEndTime().format(FORMATTER)) +
-                '}';
+
+        return id + ","
+                + taskType + ","
+                + name + ","
+                + taskStatus + ","
+                + description + ","
+                + getStartTime() + ","
+                + duration + ","
+                + getEndTime();
+
     }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (!(o instanceof Task)) return false;
+
+        Task that = (Task) o;
+
+        return Objects.equals(this.name, that.name)
+                && Objects.equals(this.description, that.description)
+                && Objects.equals(this.id, that.id)
+                && Objects.equals(this.taskStatus, that.taskStatus);
+
+    }
+
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, description, id, taskStatus);
+
+    }
+
 }

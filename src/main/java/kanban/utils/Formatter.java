@@ -1,76 +1,90 @@
 package kanban.utils;
 
 import kanban.managers.historyManagers.HistoryManager;
+import kanban.managers.taskManagers.TasksManager;
 import kanban.tasks.Epic;
 import kanban.tasks.Subtask;
 import kanban.tasks.Task;
 import kanban.tasks.enums.TaskStatus;
 import kanban.tasks.enums.TaskType;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Formatter {
 
-    public static String historyToString(HistoryManager manager) { // Save the history manager to a string.
-        List<Task> historyTask = manager.getHistory(); // Pass the list of tasks from the browsing history.
-        StringBuilder builder = new StringBuilder();
+    // преобразование истории в строку
+    public static String historyToString(HistoryManager manager) {
 
-        if (historyTask.isEmpty()) {
-            return "";
-        } else {
-            builder.append(historyTask.get(0).getUin());
-            for (int i = 1; i < historyTask.size(); i++) {
-                builder.append(",");
-                builder.append(historyTask.get(i).getUin()); // Sequentially add task ids to the list.
-            }
-            return builder.toString();
-        }
+        StringBuilder sb = new StringBuilder();
+
+        for (Task task : manager.getHistory())
+            sb.append(task.getId()).append(",");
+
+        return sb.toString();
+
     }
 
-    // convert history from string
-    public static List<Integer> historyFromString(String value) { // Restoring the id list from CSV for the history manager.
+    // преобразование истории из строки
+    public static List<Integer> historyFromString(String value) {
+
         List<Integer> history = new ArrayList<>();
-        if (!value.isEmpty()) {
-            String[] split = value.split(",");
 
-            for (String id : split) {
-                history.add(Integer.parseInt(id));
-            }
-        }
+        for (var line : value.split(","))
+            history.add(Integer.parseInt(line));
+
         return history;
+
     }
 
-    // converting all tasks, epics and subtasks into one line, each on a new line
-    public String tasksToString(Task task) { //save task to string
-        long duration = task.getDuration().toMinutes();
-        return String.format("%d,%s,%s,%s,%s,%s,%s,%d", task.getUin(), task.getType(), task.getName()
-                , task.getStatus(), task.getDescription(), duration, task.getStartTime(), task.getEpicId());
+    // преобразование всех тасков, эпиков и сабтасков в одну строку, каждая с новой строки
+    public static String tasksToString(TasksManager tasksManager) {
+
+        List<Task> allTasks = new ArrayList<>();
+        var result = new StringBuilder();
+
+        allTasks.addAll(tasksManager.getTasks().values());
+        allTasks.addAll(tasksManager.getEpics().values());
+        allTasks.addAll(tasksManager.getSubtasks().values());
+
+        for (var task : allTasks)
+            result.append(task.toString()).append("\n");
+
+        return result.toString();
+
     }
 
-    // conversion from string back to tasks, epics and subtasks
-    public Task tasksFromString(String value) {
-        String[] split = value.split(",");
-        final int uin = Integer.parseInt(split[0]); // ID
-        final TaskType type = TaskType.valueOf(split[1]); // Type of task
-        final String name = split[2]; // Название.
-        final TaskStatus status = TaskStatus.valueOf(split[3]); // Status
-        final String description = split[4];
-        final long duration = Long.parseLong(split[5]); // Task duration in minutes.
-        LocalDateTime startTime = null;
+    // преобразование из строки обратно в таски, эпики и сабтаски
+    public static Task tasksFromString(String value) {
 
-        if (!split[6].equals("null")) {
-            startTime = LocalDateTime.parse(split[6]); // Date and time of the task start.
-        }
+        var epicID = 0;
+        var values = value.split(",");
+        var id = Integer.parseInt(values[0]);
+        var type = values[1];
+        var name = values[2];
+        var status = TaskStatus.valueOf(values[3]);
+        var description = values[4];
+        var startTime = Instant.parse(values[5]);
+        var duration = Long.parseLong(values[6]);
 
-        switch (type) {
-            case SUBTASK:
-                final Integer epicId = Integer.valueOf(split[7]);
-                return new Subtask(uin, name, status, description, duration, startTime, epicId);
-            case TASK:
-                return new Task(uin, name, status, description, duration, startTime);
-            default:
-                return new Epic(uin, name, status, description, duration, startTime);
-        }
+        if (TaskType.valueOf(type).equals(TaskType.SUBTASK))
+            epicID = Integer.parseInt(values[8]);
+
+        if (TaskType.valueOf(type).equals(TaskType.TASK))
+            return new Task(id, name, status, description, startTime, duration);
+
+        if (TaskType.valueOf(type).equals(TaskType.EPIC))
+            return new Epic(id, name, status, description, startTime, duration);
+
+        if (TaskType.valueOf(type).equals(TaskType.SUBTASK))
+            return new Subtask(id, name, status, description, startTime, duration, epicID);
+
+        else
+            throw new IllegalArgumentException("Данный формат таска не поддерживается");
+
     }
+
+
 }

@@ -10,66 +10,70 @@ import kanban.managers.taskManagers.TasksManager;
 import kanban.tasks.Epic;
 import kanban.tasks.Subtask;
 import kanban.tasks.Task;
+import kanban.tasks.enums.TaskStatus;
+import kanban.tasks.enums.TaskType;
+
 import java.io.IOException;
 import java.io.InterruptedIOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedIOException {
+    public static void main(String[] args) throws IOException {
         System.out.println("Start application...");
 
-        TasksManager taskManager = Managers.getDefaultManager();
+        var taskManager = Managers.getDefaultManager();
 
-        System.out.println("Список: " + taskManager.getAllTasks());
+        System.out.println("Список: " + taskManager.getTasks());
         System.out.println();
-        System.out.println("Список: " + taskManager.getAllEpics());
+        System.out.println("Список: " + taskManager.getEpics());
         System.out.println();
-        System.out.println("Список: " + taskManager.getAllSubtasks());
+        System.out.println("Список: " + taskManager.getSubtasks());
         System.out.println();
         System.out.println("История: " + taskManager.getHistory());
 
-        Task newTask1 = new Task("Задача №1", "Описание задачи №1", 0, null);
-        taskManager.createTask(newTask1);
+        var task1 = taskManager.createTask(new Task(
+                "Task1",
+                "Description Task1",
+                Instant.ofEpochSecond(10000),
+                10));
 
-        Task newTask2 = new Task("Задача №2", "Описание задачи №2"
-                , 50, LocalDateTime.of(2022, 12, 27, 20, 0));
-        taskManager.createTask(newTask2);
+        var epic1 = taskManager.createEpic(new Epic(
+                "Epic1",
+                "Description Epic1",
+                TaskType.EPIC));
 
-        Epic newEpic1 = new Epic("Эпик №1", "Описание эпика №1");
-        taskManager.createEpic(newEpic1);
+        var subtask1 = taskManager.createSubtask(new Subtask(
+                "Subtask1",
+                        "Description Subtask1",
+                        Instant.EPOCH,
+                        50,
+                        epic1.getId()));
 
-        Subtask newSubtask1 = new Subtask("Подзадача №1 эпика №1","Описание подзадачи №1 эпика №1"
-                ,  0, null, newEpic1.getUin());
-        taskManager.createSubtask(newSubtask1);
-
-        Subtask newSubtask2 = new Subtask("Подзадача №2 эпика №1", "Описание подзадачи №2 эпика №2", 30
-                , LocalDateTime.of(2022, 12, 27, 21, 0), newEpic1.getUin());
-        taskManager.createSubtask(newSubtask2);
-
-        Subtask newSubtask3 = new Subtask("Подзадача №2 эпика №1", "Описание подзадачи №2 эпика №2", 40
-                , LocalDateTime.of(2022, 12, 27, 22, 0), newEpic1.getUin());
-        taskManager.createSubtask(newSubtask3);
-
-        Epic newEpic2 = new Epic("Эпик №2", "Описание эпика №2");
-        taskManager.createEpic(newEpic2);
+        var subtask2 = taskManager.createSubtask(new Subtask(
+                "Subtask2",
+                "Description Subtask2",
+                Instant.ofEpochSecond(10000),
+                50,
+                epic1.getId()));
 
         System.out.println("Список созданных задач:");
-        System.out.println(taskManager.getAllTasks());
-        System.out.println(taskManager.getAllEpics());
-        System.out.println(taskManager.getAllSubtasks());
+        System.out.println(taskManager.getTasks());
+        System.out.println(taskManager.getEpics());
+        System.out.println(taskManager.getSubtasks());
 
         // We request the created tasks several times and check the history for duplicates and order.
         System.out.println("Запрашиваем созданные задачи:");
-        System.out.println(taskManager.getEpicById(1));
-        System.out.println(taskManager.getSubtaskById(4));
-        System.out.println(taskManager.getSubtaskById(5));
-        System.out.println(taskManager.getTaskById(1));
-        System.out.println(taskManager.getSubtaskById(4));
-        System.out.println(taskManager.getSubtaskById(6));
-        System.out.println(taskManager.getEpicById(3));
-        System.out.println("История просмотра: " + taskManager.getHistory());
+        System.out.println(taskManager.getTask(task1.getId()));
+        System.out.println(taskManager.getEpic(epic1.getId()));
+        System.out.println(taskManager.getSubtask(subtask1.getId()));
+        System.out.println(taskManager.getSubtask(subtask2.getId()));
+
+        System.out.println("История просмотра: ");
+        taskManager.getHistory();
 
         System.out.println("\n" + "Список задач в порядке приоритета: ");
         taskManager.getPrioritizedTasks().forEach(System.out::println);
+
     }
 }

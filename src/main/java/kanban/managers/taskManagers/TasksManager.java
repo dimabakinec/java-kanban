@@ -4,49 +4,78 @@ import kanban.tasks.Epic;
 import kanban.tasks.Subtask;
 import kanban.tasks.Task;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface TasksManager {
 
-    List getHistory();
+    // получение мапы всех тасков
+    Map<Integer, Task> getTasks();
 
-    void createTask(Task task);
+    // получение мапы всех эпиков
+    Map<Integer, Epic> getEpics();
 
-    void createEpic(Epic epic);
+    // получение мапы всех сабтасков
+    Map<Integer, Subtask> getSubtasks();
 
-    void createSubtask(Subtask subtask);
+    // создание таска
+    Task createTask(Task task);
 
-    List<Task> getAllTasks();
+    // создание сабтаска
+    Subtask createSubtask(Subtask subtask);
 
-    List<Epic> getAllEpics();
+    // создание эпика
+    Epic createEpic(Epic epic);
 
-    List<Subtask> getAllSubtasks();
+    // удаление эпика
+    void removeEpic(int epicID);
 
-    void removeTaskById(int id);
+    // удаление сабтаска
+    void removeSubtask(int id);
 
-    void removeEpicById(int id);
+    // удаление таска
+    void removeTask(int id);
 
-    void removeSubtaskByID(Integer id);
+    // удаление всех тасков, эпиков и сабтасков
+    void removeAllTasksEpicsSubtasks();
 
-    void removeAllTasks();
+    // обновление таска
+    Task update(Task task);
 
-    void removeAllEpics();
+    // обновление сабтаска
+    Subtask update(Subtask subtask);
 
-    void removeAllSubtasks();
+    // обновление эпика
+    Epic update(Epic epic);
 
-    Task getTaskById(int id);
+    // запрос таска
+    Task getTask(int id);
 
-    Epic getEpicById(int id);
+    // запрос сабтаска
+    Subtask getSubtask(int id);
 
-    Subtask getSubtaskById(int id);
+    // запрос эпика
+    Epic getEpic(int id);
 
-    List<Subtask> getSubtasksFromEpic(int id);
+    // получение истории
+    List<Task> getHistory();
 
-    void updateTask(Task task);
+    // получение приоритетного списка тасков
+    List<Task> getPrioritizedTasks();
 
-    void updateEpic(Epic epic);
+    // печать списка всех тасков
+    void printAllTasks();
 
-    void updateSubtask(Subtask subtask);
+    // печать списка всех сабтасков
+    void printAllSubtasks();
 
-    Set<Task> getPrioritizedTasks();
+    // печать списка всех эпиков
+    void printAllEpics();
+
+    // печать приоритетного списка
+    void printPrioritizedTasks();
+
+    // печать истории
+    void printHistory();
+
 }

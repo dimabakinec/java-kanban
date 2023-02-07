@@ -2,42 +2,83 @@ package kanban.tasks;
 
 import kanban.tasks.enums.TaskStatus;
 import kanban.tasks.enums.TaskType;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Objects;
+
 import static kanban.tasks.enums.TaskType.SUBTASK;
 
 public class Subtask extends Task {
-    private Integer epicId;
-    private final TaskType type = SUBTASK;
 
-    public Subtask(int uin, String name, TaskStatus status, String description, long duration, LocalDateTime startTime, Integer epicId) {
-        super(uin, name, status, description, duration, startTime);
-        this.epicId = epicId;
-        setType(SUBTASK);
+    private final int epicID;
+
+    public Subtask(String name,
+                   String description,
+                   Instant startTime,
+                   long duration,
+                   int epicID) {
+
+        super(name, description, startTime, duration);
+        this.taskType = TaskType.SUBTASK;
+        this.epicID = epicID;
+
     }
 
-    public Subtask(String name, String description, long duration, LocalDateTime startTime, Integer epicId) {
-        super(name, description, duration, startTime);
-        this.epicId = epicId;
-        setType(SUBTASK);
+    public Subtask(int id,
+                   String name,
+                   TaskStatus taskStatus,
+                   String description,
+                   Instant startTime,
+                   long duration,
+                   int epicID) {
+
+        super(name, description, startTime, duration);
+        this.taskType = TaskType.SUBTASK;
+        this.taskStatus = taskStatus;
+        this.epicID = epicID;
+        this.id = id;
+
     }
 
-    @Override
-    public Integer getEpicId() {
-        return epicId;
+    public int getEpicID() {
+
+        return epicID;
+
     }
 
     @Override
     public String toString() {
-        return  "Subtask{" +
-                "uin=" + uin +
-                ", type=" + getType() +
-                ", name='" + name + '\'' +
-                ", status=" + status +
-                ", description='" + description +
-                ", duration=" + duration.toMinutes() + '\'' +
-                ", startTime=" + ((startTime == null) ? "null" : startTime.format(FORMATTER)) +
-                ", endTime=" + ((getEndTime() == null) ? "null" : getEndTime().format(FORMATTER)) +
-                ", epicId=" + epicId +
-                '}';
+
+        return id + ","
+                + taskType + ","
+                + name + ","
+                + taskStatus + ","
+                + description + ","
+                + getStartTime() + ","
+                + duration + ","
+                + getEndTime() + ","
+                + epicID;
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (!(o instanceof Subtask)) return false;
+        if (!super.equals(o)) return false;
+
+        Subtask that = (Subtask) o;
+
+        return Objects.equals(this.epicID, that.epicID);
+
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), epicID);
+
     }
 }

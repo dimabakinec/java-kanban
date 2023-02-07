@@ -3,15 +3,16 @@ package kanban.managers;
 import kanban.managers.historyManagers.HistoryManager;
 import kanban.managers.historyManagers.InMemoryHistoryManager;
 import kanban.managers.taskManagers.FileBackedTasksManager;
-import kanban.managers.taskManagers.TasksManager;
-import java.io.File;
+import kanban.managers.taskManagers.InMemoryTasksManager;
 
 public class Managers {
-    /* менеджер по умолчанию, чтобы использовать InMemoryTasksManager();
-       сменить на другой "return new..." */
 
-    public static TasksManager getDefaultManager() {
-        return FileBackedTasksManager.loadFromFile(new File("src/main/resources/SaveDataFile.csv"));
+    public static InMemoryTasksManager getDefaultMemoryManager(){
+        return new InMemoryTasksManager();
+    }
+
+    public static FileBackedTasksManager getDefaultManager() {
+        return new FileBackedTasksManager();
     }
 
     public static HistoryManager getDefaultHistoryManager() {
