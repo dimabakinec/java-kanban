@@ -10,7 +10,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileBackedTasksManagerTest extends TasksManagerTest<FileBackedTasksManager> {
-    private Path filePath = Path.of("src/main/resources/SaveDataFile.csv");
+    private Path filePath = Path.of("/Users/dimabakinec/Desktop/MyJava/YandexSprint/java-kanban/src/main/resources/SaveDataFile.csv");
 
     @BeforeEach
     public void loadInitialConditions() {

@@ -13,7 +13,7 @@ import java.nio.file.Path;
 
 public class FileBackedTasksManager extends InMemoryTasksManager implements TasksManager {
 
-    private static final Path filePath = Path.of("src/main/resources/SaveDataFile.csv");
+    private static final Path filePath = Path.of("/Users/dimabakinec/Desktop/MyJava/YandexSprint/java-kanban/src/main/resources/SaveDataFile.csv");
 
     @Override
     public Task createTask(Task task) {
@@ -150,63 +150,40 @@ public class FileBackedTasksManager extends InMemoryTasksManager implements Task
                     + Formatter.historyToString(historyManager);
             bw.write(values);
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка записи в файл");
+            throw new ManagerSaveException("Ошибка записи в файл", e);
         }
     }
 
     // загрузка из файла
     public static FileBackedTasksManager load(Path filePath) {
-
         var fileBackedTasksManager = Managers.getDefaultManager();
-
         int initialID = 0;
-
         try {
-
             var fileName = Files.readString(filePath);
-
             var lines = fileName.split("\n");
-
             for (int i = 1; i < lines.length - 2; i++) {
-
                 var task = Formatter.tasksFromString(lines[i]);
                 var type = lines[i].split(",")[1];
-
                 if (task.getId() > initialID)
                     initialID = task.getId();
-
                 if (TaskType.valueOf(type).equals(TaskType.TASK)) {
-
                     fileBackedTasksManager.createTask(task);
                     historyManager.add(fileBackedTasksManager.getTask(task.getId()));
-
                 }
-
                 if (TaskType.valueOf(type).equals(TaskType.EPIC)) {
-
                     var epic = (Epic) task;
                     fileBackedTasksManager.createEpic(epic);
                     historyManager.add(fileBackedTasksManager.getEpic(epic.getId()));
-
                 }
-
                 if (TaskType.valueOf(type).equals(TaskType.SUBTASK)) {
-
                     var subtask = (Subtask) task;
                     fileBackedTasksManager.createSubtask(subtask);
                     historyManager.add(fileBackedTasksManager.getSubtask(subtask.getId()));
-
                 }
             }
-
         } catch (IOException e) {
-
-            throw new ManagerSaveException("Ошибка загрузки из файла");
-
+            throw new ManagerSaveException("Ошибка загрузки из файла", e);
         }
-
         return fileBackedTasksManager;
-
     }
-
 }
