@@ -43,6 +43,14 @@ public class InMemoryTasksManager implements TasksManager, Comparator<Task> {
 
     }
 
+    // печать приоритетного списка
+    public void printPrioritizedTasks() {
+
+        System.out.println("СПИСОК ПРИОРИТЕТНЫХ ЗАДАЧ: ");
+        prioritizedTasks.forEach(System.out::println);
+
+    }
+
     // добавление таска в список + проверка нет ли пересечения
     private void addToPrioritizedTasks(Task task) {
 
@@ -70,13 +78,7 @@ public class InMemoryTasksManager implements TasksManager, Comparator<Task> {
 
     }
 
-    // печать приоритетного списка
-    public void printPrioritizedTasks() {
 
-        System.out.println("СПИСОК ПРИОРИТЕТНЫХ ЗАДАЧ: ");
-        prioritizedTasks.forEach(System.out::println);
-
-    }
 
     @Override // сравнение тасков по getStartTime()
     public int compare(Task o1, Task o2) {

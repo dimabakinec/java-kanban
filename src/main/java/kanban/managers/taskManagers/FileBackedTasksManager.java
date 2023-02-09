@@ -11,7 +11,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FileBackedTasksManager extends InMemoryTasksManager implements TasksManager {
+public class FileBackedTasksManager extends InMemoryTasksManager {
 
     private static final Path filePath = Path.of("/Users/dimabakinec/Desktop/MyJava/YandexSprint/java-kanban/src/main/resources/SaveDataFile.csv");
 
