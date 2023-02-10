@@ -150,7 +150,7 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
                     + Formatter.historyToString(historyManager);
             bw.write(values);
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка записи в файл", e);
+            throw new ManagerSaveException("Ошибка записи в файл");
         }
     }
 
@@ -182,7 +182,7 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
                 }
             }
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка загрузки из файла", e);
+            throw new ManagerSaveException("Ошибка загрузки из файла");
         }
         return fileBackedTasksManager;
     }

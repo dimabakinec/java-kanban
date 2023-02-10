@@ -42,7 +42,7 @@ public class Main {
                 "Epic1",
                 "Description Epic1",
                 TaskType.EPIC));
-
+//
         var subtask1 = taskManager.createSubtask(new Subtask(
                 "Subtask1",
                         "Description Subtask1",
@@ -53,8 +53,8 @@ public class Main {
         var subtask2 = taskManager.createSubtask(new Subtask(
                 "Subtask2",
                 "Description Subtask2",
-                Instant.ofEpochSecond(10000),
-                50,
+                Instant.ofEpochSecond(100000),
+                99,
                 epic1.getId()));
 
         System.out.println("Список созданных задач:");

@@ -38,9 +38,7 @@ public class InMemoryTasksManager implements TasksManager, Comparator<Task> {
 
     // получение приоритетного списка + его конвертация из TreeSet в ArrayList
     public List<Task> getPrioritizedTasks() {
-
         return new ArrayList<>(prioritizedTasks);
-
     }
 
     // печать приоритетного списка
@@ -53,30 +51,33 @@ public class InMemoryTasksManager implements TasksManager, Comparator<Task> {
 
     // добавление таска в список + проверка нет ли пересечения
     private void addToPrioritizedTasks(Task task) {
-
+        checkIntersections(task);
         prioritizedTasks.add(task);
-        checkIntersections();
-
     }
 
     // проверка нет ли пересечения
-    private void checkIntersections() {
-
-        var prioritizedTasks = getPrioritizedTasks();
-
-        for (int i = 1; i < prioritizedTasks.size(); i++) {
-
-            var prioritizedTask = prioritizedTasks.get(i);
-
-            if (prioritizedTask.getStartTime().isBefore(prioritizedTasks.get(i - 1).getEndTime()))
-
-                throw new IntersectionException("Найдено пересечение между "
-                        + prioritizedTasks.get(i)
-                        + " и "
-                        + prioritizedTasks.get(i - 1));
+    public boolean checkIntersections(Task task) {
+        boolean cross = false;
+        if (task.getStartTime() == null){
+            return cross;
         }
-
+        for (Task taskPrior : prioritizedTasks) {
+            if (taskPrior.getStartTime() == null) {
+                break;
+            } else if (taskPrior.getEndTime().isAfter(task.getStartTime())
+                    && taskPrior.getEndTime().isBefore(task.getEndTime())) {
+                cross = true;
+                break;
+            }
+            if (taskPrior.getStartTime().isBefore(task.getEndTime()) && taskPrior.getStartTime().isAfter(task.getStartTime())){
+                cross = true;
+                break;
+            }
+        }
+        return cross;
     }
+
+
 
 
 
