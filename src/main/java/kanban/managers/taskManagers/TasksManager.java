@@ -5,7 +5,6 @@ import kanban.tasks.Subtask;
 import kanban.tasks.Task;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public interface TasksManager {
 
