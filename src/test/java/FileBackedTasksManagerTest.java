@@ -14,7 +14,7 @@ public class FileBackedTasksManagerTest extends TasksManagerTest<FileBackedTasks
 
     @BeforeEach
     public void loadInitialConditions() {
-        manager = Managers.getDefaultManager();
+        manager = Managers.getDefaultFileBackedManager();
     }
 
     @Test

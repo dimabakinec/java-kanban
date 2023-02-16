@@ -2,12 +2,8 @@ package kanban.tasks;
 
 import kanban.tasks.enums.TaskStatus;
 import kanban.tasks.enums.TaskType;
-import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import static kanban.tasks.enums.TaskType.TASK;
 
 public class Task {
 

@@ -60,7 +60,8 @@ public class InMemoryTasksManager implements TasksManager, Comparator<Task> {
                 cross = true;
                 break;
             }
-            if (taskPrior.getStartTime().isBefore(task.getEndTime()) && taskPrior.getStartTime().isAfter(task.getStartTime())){
+            if (taskPrior.getStartTime().isBefore(task.getEndTime())
+                    && taskPrior.getStartTime().isAfter(task.getStartTime())){
                 cross = true;
                 break;
             }

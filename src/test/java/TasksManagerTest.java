@@ -402,19 +402,14 @@ public abstract class TasksManagerTest <T extends TasksManager> {
 
     @Test
     public void throwIntersectionExceptionTest() {
-
         assertThrows(IntersectionException.class, () -> {
-
             manager.createTask(new Task(
-                    "Task1", "Task1",
-                    Instant.ofEpochMilli(42), 42));
-
+                    "Task1", "Task1 Description",
+                    Instant.ofEpochMilli(1675282316000L), 250));
             manager.createTask(new Task(
-                    "Task2", "Task2",
-                    Instant.ofEpochMilli(43), 43));
-
+                    "Task2", "Task2 Description",
+                    Instant.ofEpochMilli(1675800716000L), 250));
         });
-
     }
 
     @Test

@@ -156,7 +156,7 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
 
     // загрузка из файла
     public static FileBackedTasksManager load(Path filePath) {
-        var fileBackedTasksManager = Managers.getDefaultManager();
+        var fileBackedTasksManager = Managers.getDefaultFileBackedManager();
         int initialID = 0;
         try {
             var fileName = Files.readString(filePath);
@@ -184,6 +184,7 @@ public class FileBackedTasksManager extends InMemoryTasksManager {
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка загрузки из файла");
         }
+
         return fileBackedTasksManager;
     }
 }

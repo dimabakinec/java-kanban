@@ -1,5 +1,7 @@
 package kanban.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import kanban.managers.historyManagers.HistoryManager;
 import kanban.managers.taskManagers.TasksManager;
 import kanban.tasks.Epic;
@@ -86,5 +88,13 @@ public class Formatter {
 
     }
 
+    // преобразование в GSON
+    public static Gson createGson() {
+
+        return new GsonBuilder()
+                .registerTypeAdapter(Instant.class, new InstantAdapter())
+                .create();
+
+    }
 
 }

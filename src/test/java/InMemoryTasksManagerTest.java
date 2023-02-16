@@ -7,6 +7,6 @@ public class InMemoryTasksManagerTest extends TasksManagerTest<InMemoryTasksMana
 
     @BeforeEach
     public void loadInitialConditions() {
-        manager = Managers.getDefaultMemoryManager();
+        manager = new InMemoryTasksManager();
     }
 }
