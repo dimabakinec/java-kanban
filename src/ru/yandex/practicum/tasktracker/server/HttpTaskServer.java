@@ -57,8 +57,8 @@ public class HttpTaskServer {
                     "Проверьте, пожалуйста, адрес, метод (ожидали GET, а получили - " + method + ") \n" +
                     "и повторите попытку.";
             sendText(httpExchange, text, 405);
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         } finally {
             httpExchange.close();
         }

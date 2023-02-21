@@ -13,6 +13,7 @@ import ru.yandex.practicum.tasktracker.service.TaskManager;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static ru.yandex.practicum.tasktracker.server.HttpTaskServer.DEFAULT_CHARSET;
@@ -21,6 +22,7 @@ import static ru.yandex.practicum.tasktracker.server.HttpTaskServer.sendText;
 public class TaskHandler implements HttpHandler {
     private final TaskManager taskManager;
     private final Gson gson = GsonConverter.getGsonTaskConverter();
+    private final Pattern pattern = Pattern.compile("^/tasks/task$");
 
     public TaskHandler(TaskManager taskManager) {
         this.taskManager = taskManager;
@@ -115,28 +117,30 @@ public class TaskHandler implements HttpHandler {
     }
 
     private Endpoint getEndpoint(String path, String method) {
+        String str = "/tasks/task";
+        Matcher m = pattern.matcher(path);
         switch (method) {
             case "GET":
-                if (Pattern.matches("^/tasks/task$", path)) {
+                if (m.matches()) {
                     return Endpoint.GET_ALL;
                 }
-                if (Pattern.matches("^/tasks/task/\\d+$", path)) {
+                if (m.matches()) {
                     return Endpoint.GET_ID;
                 }
                 break;
             case "POST":
-                if (Pattern.matches("^/tasks/task$", path)) {
+                if (m.matches()) {
                     return Endpoint.ADD;
                 }
-                if (Pattern.matches("^/tasks/task/\\d+$", path)) {
+                if (m.matches()) {
                     return Endpoint.UPDATE;
                 }
                 break;
             case "DELETE":
-                if (Pattern.matches("^/tasks/task$", path)) {
+                if (m.matches()) {
                     return Endpoint.DELETE_ALL;
                 }
-                if (Pattern.matches("^/tasks/task/\\d+$", path)) {
+                if (m.matches()) {
                     return Endpoint.DELETE_ID;
                 }
                 break;
